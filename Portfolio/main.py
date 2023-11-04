@@ -50,15 +50,17 @@ def main():
       cart_persistant.add_item(item_info)
     elif choice == 'r':
       item_name = input("Enter the name of the item to remove: ")
-      cart.remove_item(item_name)
+      index = cart.remove_item(item_name)
+      if index is not None:
+        cart_persistant.remove_item(index + 1)
     elif choice == 'c':
       item_info = {
         'item_name': input("Enter the name of the item to modify: "),
-        'item_price': float(input("Enter the new price (press Enter to keep the same): ") or None),
-        'item_quantity': int(input("Enter the new quantity (press Enter to keep the same): ") or None),
-        'item_description': input("Enter the new description (press Enter to keep the same): ") or None,
+        'item_quantity': int(input("Enter the new quantity (press Enter to keep the same): ") or None)
       }
-      cart.modify_item(item_info)
+      index = cart.modify_item(item_info)
+      if index is not None:
+        cart_persistant.update_item(index + 1, cart.cart_items[index].__dict__)
     elif choice == 'i':
       print('\n')
       cart.print_descriptions()

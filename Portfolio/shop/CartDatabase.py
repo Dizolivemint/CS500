@@ -1,9 +1,8 @@
-from tinydb import TinyDB, Query
+from tinydb import TinyDB
 
 class CartDatabase:
   def __init__(self, db_file):
     self.db = TinyDB(db_file)
-    self.Item = Query()
 
   def add_item(self, item):
     self.db.table('items').insert(item)
@@ -26,3 +25,9 @@ class CartDatabase:
   def empty_cart(self, cart_id):
     self.db.table('carts').truncate()
     self.db.table('items').truncate()
+    
+  def update_item(self, item_id, item):
+    self.db.table('items').update(item, doc_ids=[item_id])
+    
+  def remove_item(self, item_id):
+    self.db.table('items').remove(doc_ids=[item_id])
