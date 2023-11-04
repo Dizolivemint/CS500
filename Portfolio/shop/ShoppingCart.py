@@ -9,32 +9,25 @@ class ShoppingCart:
     self.cart_items.append(item_info)
 
   def remove_item(self, item_name):
-    isFound = False
-    for item in self.cart_items:
+    for index, item in enumerate(self.cart_items):
       if item.item_name == item_name:
         self.cart_items.remove(item)
-        found = True
-        break
-    if not isFound:
-      print("Item not found in cart. Nothing removed.")
+        return index
+    print("Item not found in cart. Nothing removed.")
+    return None
   
   def clear(self):
     self.cart_items.clear()
 
   def modify_item(self, modified_item):
-    isFound = False
-    for item in self.cart_items:
+    for index, item in enumerate(self.cart_items):
       if item.item_name == modified_item['item_name']:
-        if modified_item.get('item_price') is not None:
-          item.item_price = modified_item['item_price']
         if modified_item.get('item_quantity') is not None:
           item.item_quantity = modified_item['item_quantity']
-        if modified_item.get('item_description') is not None:
-          item.item_description = modified_item['item_description']
-        isFound = True
-        break
-    if not isFound:
-      print("Item not found in cart. Nothing modified.")
+        return index
+
+    print("Item not found in cart. Nothing modified.")
+    return None
 
   def get_num_items_in_cart(self):
     return sum(item.item_quantity for item in self.cart_items)
